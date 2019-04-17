@@ -19,7 +19,7 @@ api = Api(app)
 class AllUsers(Resource):
 	###############
 	def get(self):	
-		url = 'http://friendservice/users'
+		url = 'http://friendservice:5000/users'
 		r = requests.get(url)
 		reJSON = r.json()
 		print(reJSON)
@@ -56,7 +56,7 @@ class Users(Resource):
 		
 		# Request another service
 		userEmail = args.email
-		url = 'http://friendservice/users/' + userEmail
+		url = 'http://friendservice:5000/users/' + userEmail
 		response = requests.get(url)
 		rData = response.json()
 		if rData['message'] == "User not found":
@@ -91,7 +91,7 @@ class UserByEmail(Resource):
 		args = shelf[email]		
 		# Request another service
 		userEmail = email
-		url = 'http://friendservice/users/' + userEmail
+		url = 'http://friendservice:5000/users/' + userEmail
 		response = requests.get(url)
 		rData = response.json()
 		if rData['message'] == "User not found":
@@ -122,7 +122,7 @@ class UserByEmail(Resource):
 		
 		# Request another service
 		userEmail = args.email
-		url = 'http://friendservice/users/' + userEmail
+		url = 'http://friendservice:5000/users/' + userEmail
 		response = requests.get(url)
 		rData = response.json()
 		if rData['message'] == "User not found":
@@ -169,8 +169,8 @@ api.add_resource(UserByEmail, '/users/<string:email>')
 
 def fill():
 	shelf = get_db()	
-	r = requests.get('http://friendservice/')
-	url = 'http://friendservice/users'
+	r = requests.get('http://friendservice:5000/')
+	url = 'http://friendservice:5000/users'
 	data = {"email": "hax@gmail.com",
 			"role": "Manager",
 			"accessLevel": "One"}
