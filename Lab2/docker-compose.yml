@@ -19,7 +19,7 @@ services:
     ports:
     - 5000:5000
     networks:
-    - mynet
+    - net1
 
 networks:
-  mynet:
+  net1:
