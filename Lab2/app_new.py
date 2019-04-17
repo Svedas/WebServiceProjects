@@ -168,7 +168,8 @@ api.add_resource(Users, '/users')
 api.add_resource(UserByEmail, '/users/<string:email>')
 
 def fill():
-	shelf = get_db()
+	shelf = get_db()	
+	r = requests.get('http://friendservice/')
 	url = 'http://friendservice/users'
 	data = {"email": "hax@gmail.com",
 			"role": "Manager",
