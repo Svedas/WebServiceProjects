@@ -33,7 +33,7 @@ class Users(Resource):
 		
 		users = []
 		temp = []
-		if request.form['embedded'] == 'users':
+		if request.args.get('embedded') == 'users':
 			#Returns user info
 			for key in keys:
 				if key != "filled":
@@ -87,8 +87,8 @@ class Users(Resource):
 				"lastName": args_user['lastName'],
 				"email": args_user['email']}
 			r = requests.post(url, data=data)
-			shelf[args['email']] = args
-			#args.update({'user': data})
+			#shelf[args['email']] = args
+			args.update({'user': data})
 			#return {'message': 'Not Found, no such user', 'data': []}, 404
 		else :
 			#shelf[args['email']] = args
