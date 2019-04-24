@@ -30,8 +30,25 @@ class Users(Resource):
 	def get(self):	
 		shelf = get_db()
 		keys = list(shelf.keys())
-
+		
 		users = []
+		temp = []
+		if request.form['embedded'] == 'users':
+			#Returns user info
+			for key in keys:
+				if key != "filled":
+					temp = shelf[key]				
+					#args = shelf[email]		
+					# Request another service
+					userEmail = temp['email']
+					url = 'http://friendservice:5000/users/' + userEmail
+					response = requests.get(url)
+					rData = response.json()
+					if rData['message'] != "User not found":	
+						temp.update({'user': rData['data']})
+				users.append(temp)
+			return {'message': 'OK', 'data': users}, 200  
+		##################################		
 		for key in keys:
 			if key != "filled":
 				users.append(shelf[key])
@@ -60,7 +77,17 @@ class Users(Resource):
 		response = requests.get(url)
 		rData = response.json()
 		if rData['message'] == "User not found":
-			return {'message': 'Not Found, no such user', 'data': []}, 404
+			parser.add_argument('firstName', required=True)
+			parser.add_argument('lastName', required=True)
+			parser.add_argument('email', required=True)
+			args = parser.parse_args()
+			
+			url = 'http://friendservice:5000/users'
+			data = {"firstName": args['firstName'],
+				"lastName": args['lastName'],
+				"email": args['email']}
+			r = requests.post(url, data=data)
+			#return {'message': 'Not Found, no such user', 'data': []}, 404
 			
 		#print(rData['message'])
 		#return {'message': 'Debug', 'data': rData}, 200
