@@ -220,7 +220,7 @@ def fill():
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
-        db = g._database = shelve.open("shelf_User-Role.db")
+        db = g._database = shelve.open("shelf_User-Role_v1.db")
     return db
 
 
