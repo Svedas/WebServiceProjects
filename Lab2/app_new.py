@@ -80,20 +80,24 @@ class Users(Resource):
 			parser.add_argument('firstName', required=True)
 			parser.add_argument('lastName', required=True)
 			parser.add_argument('email', required=True)
-			args = parser.parse_args()
+			args_user = parser.parse_args()
 			
 			url = 'http://friendservice:5000/users'
-			data = {"firstName": args['firstName'],
-				"lastName": args['lastName'],
-				"email": args['email']}
+			data = {"firstName": args_user['firstName'],
+				"lastName": args_user['lastName'],
+				"email": args_user['email']}
 			r = requests.post(url, data=data)
+			shelf[args['email']] = args
+			#args.update({'user': data})
 			#return {'message': 'Not Found, no such user', 'data': []}, 404
-			
+		else :
+			#shelf[args['email']] = args
+			args.update({'user': rData['data']})
 		#print(rData['message'])
 		#return {'message': 'Debug', 'data': rData}, 200
 		
 		shelf[args['email']] = args
-		args.update({'user': rData['data']})
+		#args.update({'user': rData['data']})
 		return {'message': 'Created', 'data': args}, 201, {'Location': '/users/' + args['email']}
 		
 	###############
