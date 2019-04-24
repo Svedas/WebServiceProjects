@@ -46,7 +46,7 @@ class Users(Resource):
 					rData = response.json()
 					if rData['message'] != "User not found":	
 						temp.update({'user': rData['data']})
-				users.append(temp)
+					users.append(temp)
 			return {'message': 'OK', 'data': users}, 200  
 		##################################		
 		for key in keys:
