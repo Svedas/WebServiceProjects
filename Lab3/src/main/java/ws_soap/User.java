@@ -17,5 +17,5 @@ public class User {
     public String email;
     public String role;
     public String accessLevel;
-    public UserInfo userInfo;
+//    public UserInfo userInfo;
 }

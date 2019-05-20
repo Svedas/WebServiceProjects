@@ -27,7 +27,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>endpoint.UsersPublisher</mainClass>
+                            <mainClass>web_SOAP.endpoint.UsersPublisher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
