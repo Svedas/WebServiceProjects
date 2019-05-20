@@ -1,0 +1,25 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: python app_new.py
+    ports:
+    - "80:5001"
+    links:
+    - "friendservice"
+    depends_on:
+    - friendservice
+    volumes:
+    - .:/code
+    networks:
+    - net1
+  friendservice:
+    build: .
+    command: python app.py
+    ports:
+    - 5000:5000
+    networks:
+    - net1
+
+networks:
+  net1:
