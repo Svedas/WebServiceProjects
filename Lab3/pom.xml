@@ -43,5 +43,5 @@
             </plugin>
         </plugins>
     </build>
-    <name>Web_SOAP</name>
+    <name>web_SOAP</name>
 </project>

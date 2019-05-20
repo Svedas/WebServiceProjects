@@ -2,7 +2,7 @@ version: '2'
 services:
   ws_soap:
     build: .
-    command: java -cp web_SOAP-1.0-SNAPSHOT-jar-with-dependencies.jar Web_SOAP.endpoint.UsersPublisher;
+    command: java -cp web_SOAP-1.0-SNAPSHOT-jar-with-dependencies.jar endpoint.UsersPublisher;
     ports:
     - 80:5005
     links:
