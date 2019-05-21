@@ -17,7 +17,7 @@
         </ns2:getUsers>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 ## List of all users with delailed info
 
@@ -29,7 +29,7 @@
         </ns2:getUsersWithInfo>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 ## Add user
 
@@ -44,7 +44,7 @@
         </ns2:addUser>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 ## Get user 
 
@@ -57,7 +57,7 @@
         </ns2:getUser>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 ## Edit user
 
@@ -72,7 +72,7 @@
         </ns2:putUser>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 ## Delete user
 
@@ -85,7 +85,7 @@
         </ns2:deleteUser>
     </S:Body>
 </S:Envelope>
-```xml
+```
 
 # Prefilled database
 
@@ -120,7 +120,7 @@
         }
     ]
 }
-```json
+```
 
 
 
