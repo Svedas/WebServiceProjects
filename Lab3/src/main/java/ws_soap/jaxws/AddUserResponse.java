@@ -5,6 +5,7 @@
  */
 package ws_soap.jaxws;
 
+import ws_soap.returnDetailedMessage;
 import ws_soap.returnMessage;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,14 +25,13 @@ import javax.xml.bind.annotation.XmlType;
 public class AddUserResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private returnMessage _return;
+    private returnDetailedMessage _return;
 
-
-    public returnMessage getReturn() {
+    public returnDetailedMessage getReturn() {
         return this._return;
     }
 
-    public void setReturn(returnMessage _return) {
+    public void setReturn(returnDetailedMessage _return) {
         this._return = _return;
     }
 

@@ -43,20 +43,45 @@ public class UsersImpl implements Users{
         }
         return users;
     } 
+    
+    @Override
+    public UserWithInfo[] getUsersWithInfo() {
+        UserWithInfo[] users = null;
+        try {
+            URL url = new URL("http://web:5001/users?embedded=users");
+//            URL url = new URL("http://0.0.0.0:5001/users");
+            
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + conn.getResponseCode());
+            }
+            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
+            users = JSONConverter.jsonToUsersWithInfo(jsonString);
+            conn.disconnect();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    } 
 
     @Override
-    public returnMessage addUser(String email, String role, String accessLevel) {
-        returnMessage returnval = null;
+    public returnDetailedMessage addUser(String email, String role, String accessLevel) {
+        returnDetailedMessage returnval = null;
         try {
             String jsonPutString = "{";
             if (email != null)
-                jsonPutString+= " \"email\" : \"" + email + "\",";
+                jsonPutString+= "\"email\": \"" + email + "\",";
 
             if (role != null)
-                jsonPutString += "\"role\" : \"" + role + "\",";
+                jsonPutString += "\"role\": \"" + role + "\",";
             
             if (accessLevel != null)
-                jsonPutString += "\"accessLevel\" : \"" + accessLevel + "\",";
+                jsonPutString += "\"accessLevel\": \"" + accessLevel + "\",";
 
             if(jsonPutString.endsWith(","))
             {
@@ -70,13 +95,15 @@ public class UsersImpl implements Users{
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Accept", "application/json");
             conn.setRequestProperty("Content-Type", "application/json");
-            OutputStreamWriter out = new OutputStreamWriter(
-                    conn.getOutputStream());
+            OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
             out.write(jsonPutString);
             out.close();
-            conn.getInputStream();
+            conn.getInputStream(); // questionable
+            System.out.println(jsonPutString);
+//            conn.getInputStream();
             String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            returnval = JSONConverter.jsonToReturnMsg(jsonString);
+
+            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
             if (conn.getResponseCode() > 300) {
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "
                         + conn.getResponseCode());
@@ -84,24 +111,25 @@ public class UsersImpl implements Users{
             conn.disconnect();
         } catch (ProtocolException e) {
             e.printStackTrace();
-            returnval = new returnMessage();
+            returnval = new returnDetailedMessage();
             returnval.message = "error";
         } catch (IOException e) {
             e.printStackTrace();
-            returnval = new returnMessage();
+            returnval = new returnDetailedMessage();
             returnval.message = "bad input";
         }
         return returnval;
     }
 
     @Override
-    public User getUser(String email) {
-        User user = null;
+    public UserWithInfo getUser(String email) {
+        UserWithInfo user = null;
         if (email == null) {
             throw new RuntimeException("no user email specified");
         }
+//        System.out.println(email);
         try {
-            URL url = new URL("http://web:5001/user/" + email);
+            URL url = new URL("http://web:5001/users/" + email);
 //            URL url = new URL("http://0.0.0.0:5001/users" + email);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -111,7 +139,7 @@ public class UsersImpl implements Users{
                         + conn.getResponseCode());
             }
             String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            user = JSONConverter.jsonToUser(jsonString, email);
+            user = JSONConverter.jsonToUserWithInfo(jsonString, email);
             conn.disconnect();
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -123,8 +151,8 @@ public class UsersImpl implements Users{
     }
 
     @Override
-    public returnMessage putUser(String email, String role, String accessLevel) {
-        returnMessage returnval = null;
+    public returnDetailedMessage putUser(String email, String role, String accessLevel) {
+        returnDetailedMessage returnval = null;
         if (email == null) {
             throw new RuntimeException("no user email specified");
         }
@@ -158,7 +186,7 @@ public class UsersImpl implements Users{
             out.close();
             conn.getInputStream();
             String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            returnval = JSONConverter.jsonToReturnMsg(jsonString);
+            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
             if (conn.getResponseCode() > 300) {
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "
                         + conn.getResponseCode());
@@ -166,11 +194,11 @@ public class UsersImpl implements Users{
             conn.disconnect();
         } catch (ProtocolException e) {
             e.printStackTrace();
-            returnval = new returnMessage();
+            returnval = new returnDetailedMessage();
             returnval.message = "error";
         } catch (IOException e) {
             e.printStackTrace();
-            returnval = new returnMessage();
+            returnval = new returnDetailedMessage();
             returnval.message = "bad input";
         }
         return returnval;
@@ -186,7 +214,7 @@ public class UsersImpl implements Users{
         }
         try {
 
-            URL url = new URL("http://web:5001/people/" + email);
+            URL url = new URL("http://web:5001/users/" + email);
 //            URL url = new URL("http://0.0.0.0:5001/users" + email);
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -194,9 +222,9 @@ public class UsersImpl implements Users{
             conn.setRequestProperty("Accept", "application/x-www-form-urlencoded");
             conn.connect();
             String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            returnval = JSONConverter.jsonToReturnMsg(jsonString);
-            if (conn.getResponseCode() == 200) {
-                return new returnMessage("successfully deleted user with email " + email);
+            //returnval = JSONConverter.jsonToReturnMsg(jsonString);
+            if (conn.getResponseCode() == 204) {
+                return new returnMessage("Successfully deleted user with email: " + email);
             }
             if (conn.getResponseCode() > 300) {
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "

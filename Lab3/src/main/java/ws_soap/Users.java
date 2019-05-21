@@ -22,14 +22,15 @@ import javax.jws.soap.SOAPBinding.Use;
 
 public interface Users {
     @WebMethod User[] getUsers();
+    @WebMethod UserWithInfo[] getUsersWithInfo();
     
-    @WebMethod returnMessage addUser( @WebParam(name="email") String email,
+    @WebMethod returnDetailedMessage addUser( @WebParam(name="email") String email,
 					@WebParam(name="role") String role,
 					@WebParam(name="accessLevel") String accessLevel);
     
-    @WebMethod User getUser( @WebParam(name="email") String email);
+    @WebMethod UserWithInfo getUser( @WebParam(name="email") String email);
     
-    @WebMethod returnMessage putUser( @WebParam(name="email") String email,
+    @WebMethod returnDetailedMessage putUser( @WebParam(name="email") String email,
 					@WebParam(name="role") String role,
 					@WebParam(name="accessLevel") String accessLevel);
 

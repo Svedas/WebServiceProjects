@@ -43,6 +43,7 @@ public class UsersPublisher {
         } catch (IOException ex) {
             Logger.getLogger(UsersPublisher.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         Endpoint.publish("http://0.0.0.0:5005/users", new UsersImpl());
     }
 }

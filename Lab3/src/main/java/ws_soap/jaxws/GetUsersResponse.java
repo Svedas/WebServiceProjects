@@ -20,12 +20,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "getUsersResponse", namespace = "http://ws_soap/")
 public class GetUsersResponse {
-
     @XmlElement(name = "return", namespace = "")
     private User[] _return;
-
     public User[] getReturn() {
         return this._return;
     }
 }
-

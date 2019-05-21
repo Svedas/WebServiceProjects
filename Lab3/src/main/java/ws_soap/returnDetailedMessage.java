@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 package ws_soap;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Mantas
  */
-
-@XmlRootElement
-public class User {
-    public String email;
-    public String role;
-    public String accessLevel;
+public class returnDetailedMessage {
+    public String message;
+    public UserWithInfo data;
+    public returnDetailedMessage(){}
+    public returnDetailedMessage(String msg){
+        message = msg;
+    }
 }

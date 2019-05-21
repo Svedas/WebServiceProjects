@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import ws_soap.returnDetailedMessage;
 
 /**
  *
@@ -22,13 +23,13 @@ import javax.xml.bind.annotation.XmlType;
 public class PutUserResponse {
 
     @XmlElement(name = "return", namespace = "")
-    private returnMessage _return;
+    private returnDetailedMessage _return;
 
-    public returnMessage getReturn() {
+    public returnDetailedMessage getReturn() {
         return this._return;
     }
 
-    public void setReturn(returnMessage _return) {
+    public void setReturn(returnDetailedMessage _return) {
         this._return = _return;
     }
 

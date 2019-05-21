@@ -25,10 +25,10 @@ public class AddUser {
     @XmlElement(required = true, name = "email", namespace = "")
     private String email;
     
-    @XmlElement(required = true, name = "role", namespace = "")
+    @XmlElement(name = "role", namespace = "")
     private String role;
     
-    @XmlElement(required = true, name = "accessLevel", namespace = "")
+    @XmlElement(name = "accessLevel", namespace = "")
     private String accessLevel;
 
     public String getEmail() {
