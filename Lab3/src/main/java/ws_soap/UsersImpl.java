@@ -98,16 +98,16 @@ public class UsersImpl implements Users{
             OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
             out.write(jsonPutString);
             out.close();
-            conn.getInputStream(); // questionable
-            System.out.println(jsonPutString);
+//            conn.getInputStream(); // questionable
+//            System.out.println(jsonPutString);
 //            conn.getInputStream();
-            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-
-            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
             if (conn.getResponseCode() > 300) {
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "
                         + conn.getResponseCode());
             }
+            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
+            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
+            
             conn.disconnect();
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -184,13 +184,15 @@ public class UsersImpl implements Users{
                     conn.getOutputStream());
             out.write(jsonPutString);
             out.close();
-            conn.getInputStream();
-            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
+//            conn.getInputStream(); // questionable
+            
             if (conn.getResponseCode() > 300) {
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "
                         + conn.getResponseCode());
             }
+            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
+            returnval = JSONConverter.jsonToReturnDetailedMsg(jsonString);
+            
             conn.disconnect();
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -221,8 +223,7 @@ public class UsersImpl implements Users{
             conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Accept", "application/x-www-form-urlencoded");
             conn.connect();
-            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
-            //returnval = JSONConverter.jsonToReturnMsg(jsonString);
+            
             if (conn.getResponseCode() == 204) {
                 return new returnMessage("Successfully deleted user with email: " + email);
             }
@@ -230,6 +231,9 @@ public class UsersImpl implements Users{
                 throw new RuntimeException("Failed : HTTP error code from REST service was returned: "
                         + conn.getResponseCode());
             }
+            String jsonString = JSONConverter.getJsonStringFromConnection(conn);
+            //returnval = JSONConverter.jsonToReturnMsg(jsonString);
+            
             conn.disconnect();
         } catch (ProtocolException e) {
             throw new RuntimeException("bad input");
